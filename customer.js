@@ -7,7 +7,7 @@ $(document).ready(function () {
 		var formData = $("#registrationForm").serialize();
 		$.ajax({
 			type: "POST",
-			url: "functions.php",
+			url: "customer.php",
 			data: formData,
 			success: function (response) {
 				$("#result").html(response);
@@ -19,7 +19,7 @@ $(document).ready(function () {
     $("#displayButton").click(function () {
         $.ajax({
             type: "GET",
-            url: "functions.php",
+            url: "customer.php",
             success: function (response) {
                 var customers = JSON.parse(response);
                 var html = "<table class='table table-bordered table-striped'>";
@@ -45,11 +45,11 @@ $(document).ready(function () {
             },
         });
     });
-    // Add an event listener for the submit button
-    $("#submitButton").click(function () {
-        // Assuming you have a variable 'resultString' containing the string you want to display
-        var resultString = "Subasdasdmission asdasdasdsuasdasdasdccessful!"; // Replace with your actual result string
+    // // Add an event listener for the submit button
+    // $("#submitButton").click(function () {
+    //     // Assuming you have a variable 'resultString' containing the string you want to display
+    //     var resultString = "Subasdasdmission asdasdasdsuasdasdasdccessful!"; // Replace with your actual result string
 
-        $("#resultMessage").text(resultString);
-    });
+    //     $("#resultMessage").text(resultString);
+    // });
 });
