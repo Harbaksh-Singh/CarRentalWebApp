@@ -53,4 +53,12 @@ $(document).ready(function () {
 			},
 		});
 	});
+    // Add an event listener for the submit button
+    $("#submitButton").click(function () {
+        // Assuming you have a variable 'resultString' containing the string you want to display
+        var resultString = "Submission asdasdasdsuccessful!"; // Replace with your actual result string
+
+        // Display the result string in the resultMessage div
+        $("#resultMessage").text(resultString);
+    });
 });
