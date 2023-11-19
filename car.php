@@ -24,7 +24,7 @@ function closeDatabaseConnection($conn)
     $conn->close();
 }
 
-// Function to display cars
+// Function to display car
 function displayCars()
 {
     $conn = openDatabaseConnection();
@@ -45,6 +45,7 @@ function displayCars()
     closeDatabaseConnection($conn);
 }
 
+
 function addCarToDatabase()
 {
     // Check if the form is submitted
@@ -57,14 +58,14 @@ function addCarToDatabase()
         $colour = $_POST["colour"];
         $number_of_seats = $_POST["number_of_seats"];
         $cost_per_day = $_POST["cost_per_day"];
-        $currently_availible = $_POST["currently_availible"];
+        $currently_available = $_POST["currently_available"];
 
         $conn = openDatabaseConnection();
 
-        // Prepare and execute an SQL query to insert the car data
-        $sql = "INSERT INTO car (VIN_number, make, model, year, colour, number_of_seats, cost_per_day, currently_availible) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        // Prepare and execute an SQL query to insert the customer data
+        $sql = "INSERT INTO car (VIN_number, make, model, year, colour, number_of_seats, cost_per_day, currently_available ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ssssssss", $VIN_number, $make, $model, $year, $colour, $number_of_seats, $cost_per_day, $currently_availible);
+        $stmt->bind_param("ssssssss", $VIN_number, $make, $model, $year, $colour, $number_of_seats, $cost_per_day, $currently_available);
 
         if ($stmt->execute()) {
             echo "Registration successful!";
@@ -79,5 +80,3 @@ function addCarToDatabase()
 
 addCarToDatabase();
 displayCars();
-
-//test

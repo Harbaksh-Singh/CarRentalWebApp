@@ -77,8 +77,25 @@ function addUserToDatabase()
     }
 }
 
+if (isset($_POST['action']) && $_POST['action'] === 'removeCustomer') {
+    $customer_id_to_remove = $_POST['customer_id'];
+
+    $conn = openDatabaseConnection();
+
+    $sql = "DELETE FROM customer WHERE customer_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $customer_id_to_remove);
+
+    if ($stmt->execute()) {
+        echo "Customer removed successfully.";
+    } else {
+        echo "Error removing customer: " . $stmt->error;
+    }
+
+    $stmt->close();
+    closeDatabaseConnection($conn);
+}
+
+
 addUserToDatabase();
 displayCustomers();
-
-
-//test 
