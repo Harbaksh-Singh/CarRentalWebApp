@@ -1,7 +1,7 @@
 <?php include('bookingDB.php'); ?>
 <?php
 if (isset($_GET['edit'])) {
-    $customer_id = $_GET['edit'];
+    $booking_ID = $_GET['edit'];
     $update = true;
     $record = mysqli_query($db, "SELECT * FROM booking WHERE booking_ID='$booking_ID'");
 
@@ -25,6 +25,17 @@ if (isset($_GET['edit'])) {
 $customer_query = "SELECT customer_id, first_name FROM customer";
 $customer_result = mysqli_query($db, $customer_query);
 ?>
+<?php
+// Retrieve car data from the database
+$VIN_query = "SELECT VIN_number, make FROM car";
+$VIN_result = mysqli_query($db, $VIN_query);
+?>
+<?php
+// Retrieve insurance data from the database
+$insurance_query = "SELECT insurance_id, insurance_provider FROM insurance";
+$insurance_result = mysqli_query($db, $insurance_query);
+?>
+
 
 <!DOCTYPE html>
 <html>
@@ -35,7 +46,6 @@ $customer_result = mysqli_query($db, $customer_query);
     <title>Bookings Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="teststyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -126,32 +136,54 @@ $customer_result = mysqli_query($db, $customer_query);
                 <?php } ?>
             </tbody>
         </table>
+        <!-- FORM -->
         <form class="border rounded p-4" id="bookingForm" method="post" action="bookingDB.php">
             <input type="hidden" name="booking_ID" value="<?php echo $booking_ID; ?>">
             <div class="mb-3">
                 <label for="booking_ID" class="form-label fw-bold">Booking ID</label>
                 <input type="text" class="form-control" name="booking_ID" value="<?php echo $booking_ID; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters only">
             </div>
+            <!-- CUSTOMER DROPDOWN -->
             <div class="mb-3">
             <label for="customer_id" class="form-label fw-bold">Customer ID</label>
             <select class="form-select" name="customer_id" required>
                 <?php
                 while ($customer_row = mysqli_fetch_assoc($customer_result)) {
                     $selected = ($customer_row['customer_id'] == $customer_id) ? 'selected' : '';
-                    echo "<option value='{$customer_row['customer_id']}' $selected>{$customer_row['first_name']}</option>";
+                    echo "<option value='{$customer_row['customer_id']}' $selected>{$customer_row['customer_id']} - {$customer_row['first_name']}</option>";
+
                 }
                 ?>
             </select>
             </div>
 
+            <!-- CAR DROPDOWN -->
             <div class="mb-3">
-                <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
-                <input type="text" class="form-control" name="VIN_number" value="<?php echo $VIN_number; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters">
+            <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
+            <select class="form-select" name="VIN_number" required>
+                <?php
+                while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
+                    $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
+                    echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
+                }
+                ?>
+            </select>
             </div>
+
+            <!-- INSURANCE DROPDOWN -->
             <div class="mb-3">
-                <label for="insurance_ID" class="form-label fw-bold">Insurance ID</label>
-                <input type="text" class="form-control" name="insurance_ID" value="<?php echo $insurance_ID; ?>" required pattern="[A-Za-z0-9]+">
+            <label for="insurance_ID" class="form-label fw-bold">Insurance ID</label>
+            <select class="form-select" name="insurance_ID" required>
+                <?php
+                while ($insurance_row = mysqli_fetch_assoc($insurance_result)) {
+                    $selected = ($insurance_row['insurance_id'] == $insurance_ID) ? 'selected' : '';
+                    echo "<option value='{$insurance_row['insurance_id']}' $selected>{$insurance_row['insurance_id']} - {$insurance_row['insurance_provider']}</option>";
+
+                }
+                ?>
+            </select>
             </div>
+
             <div class="mb-3">
                 <label for="pick_up_day" class="form-label fw-bold">Pick Up Day</label>
                 <input type="date" class="form-control" name="pick_up_day" value="<?php echo $pick_up_day; ?>" required pattern="[0-9]+" title="Numeric characters only">

@@ -59,3 +59,14 @@
 
     </tbody>
 </table>
+
+<?php
+// Retrieve customer data from the database
+$VIN_query = "SELECT customer_id, first_name FROM customer";
+$VIN_result = mysqli_query($db, $customer_query);
+?>
+<?php
+// Retrieve customer data from the database
+$customer_query = "SELECT customer_id, first_name FROM customer";
+$customer_result = mysqli_query($db, $customer_query);
+?>

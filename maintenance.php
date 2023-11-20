@@ -20,6 +20,12 @@ if (isset($_GET['edit'])) {
 }
 ?>
 
+<?php
+// Retrieve car data from the database
+$VIN_query = "SELECT VIN_number, make FROM car";
+$VIN_result = mysqli_query($db, $VIN_query);
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -126,9 +132,17 @@ if (isset($_GET['edit'])) {
                 <label for="maintenance_ID" class="form-label fw-bold">Maintenance ID</label>
                 <input type="number" class="form-control" name="maintenance_ID" value="<?php echo $maintenance_ID; ?>" required>
             </div>
-            <div class="mb-3">
-                <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
-                <input type="text" class="form-control" name="VIN_number" value="<?php echo $VIN_number; ?>" required pattern="[A-Za-z0-9]+">
+             <!-- CAR DROPDOWN -->
+             <div class="mb-3">
+            <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
+            <select class="form-select" name="VIN_number" required>
+                <?php
+                while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
+                    $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
+                    echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
+                }
+                ?>
+            </select>
             </div>
             <div class="mb-3">
                 <label for="maintenance_type" class="form-label fw-bold">Maintenance Type</label>
