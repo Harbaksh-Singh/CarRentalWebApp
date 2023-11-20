@@ -95,32 +95,48 @@ $(document).ready(function () {
 
 	populateDropdown();
 
-	$("#removeCustomer").click(function () {
-		var selectedCustomerId = $("#customerDropdown").val();
-		alert(selectedCustomerId);
-		// Check if a customer is selected
-		if (selectedCustomerId) {
-			// Confirm the removal with a user prompt
-			var confirmRemove = confirm(
-				"Are you sure you want to remove this customer?"
-			);
-			if (confirmRemove) {
-				// Send an AJAX request to remove the customer
-				$.ajax({
-					url: "customer.php?action=removeCustomer",
-					type: "POST",
-					data: { customer_id: selectedCustomerId },
-					success: function (response) {
-						alert("Customer Removed Successfully");
-						populateDropdown();
-					},
-					error: function () {
-						alert("Error removing the customer.");
-					},
-				});
-			}
-		} else {
-			alert("Please select a customer to remove.");
-		}
-	});
+	// $("#removeCustomer").click(function () {
+	// 	var selectedCustomerId = $("#customerDropdown").val();
+	// 	alert(selectedCustomerId);
+	// 	// Check if a customer is selected
+	// 	if (selectedCustomerId) {
+	// 		// Confirm the removal with a user prompt
+	// 		var confirmRemove = confirm(
+	// 			"Are you sure you want to remove this customer?"
+	// 		);
+	// 		if (confirmRemove) {
+	// 			// Send an AJAX request to remove the customer
+	// 			$.ajax({
+	// 				url: "customer.php?action=removeCustomer",
+	// 				type: "POST",
+	// 				data: { customer_id: selectedCustomerId },
+	// 				success: function (response) {
+	// 					alert("Customer Removed Successfully");
+	// 					populateDropdown();
+	// 				},
+	// 				error: function () {
+	// 					alert("Error removing the customer.");
+	// 				},
+	// 			});
+	// 		}
+	// 	} else {
+	// 		alert("Please select a customer to remove.");
+	// 	}
+	// });
+    $("#removeButton").click(function () {
+        submitForm();
+    });
+    
+    function submitForm() {
+        var formData = $("#removeForm").serialize();
+        $.ajax({
+            type: "POST",
+            url: "customer.php",
+            data: formData,
+            success: function (response) {
+                $("#result").html(response);
+                alert("Success");
+            },
+        });
+    }
 });

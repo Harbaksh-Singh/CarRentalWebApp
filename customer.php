@@ -77,25 +77,52 @@ function addUserToDatabase()
     }
 }
 
-if (isset($_POST['action']) && $_POST['action'] === 'removeCustomer') {
-    $customer_id_to_remove = $_POST['customer_id'];
+// if (isset($_POST['action']) && $_POST['action'] === 'removeCustomer') {
+//     $customer_id_to_remove = $_POST['customer_id'];
 
-    $conn = openDatabaseConnection();
+//     $conn = openDatabaseConnection();
 
-    $sql = "DELETE FROM customer WHERE customer_id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $customer_id_to_remove);
+//     $sql = "DELETE FROM customer WHERE customer_id = ?";
+//     $stmt = $conn->prepare($sql);
+//     $stmt->bind_param("s", $customer_id_to_remove);
 
-    if ($stmt->execute()) {
-        echo "Customer removed successfully.";
-    } else {
-        echo "Error removing customer: " . $stmt->error;
+//     if ($stmt->execute()) {
+//         echo "Customer removed successfully.";
+//     } else {
+//         echo "Error removing customer: " . $stmt->error;
+//     }
+
+//     $stmt->close();
+//     closeDatabaseConnection($conn);
+// }
+
+function removeUser()
+{
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Retrieve form data
+        $customer_id = $_POST["remove_input"];
+
+        $conn = openDatabaseConnection();
+
+        // Prepare and execute an SQL query to insert the customer data
+        $sql = "DELETE FROM `customer` WHERE `customer`.`customer_id` = '123'";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $customer_id);
+
+        if ($stmt->execute()) {
+            echo "User removed successfully!";
+        } else {
+            echo "Error removing user: " . $stmt->error;
+        }
+
+        $stmt->close();
+        closeDatabaseConnection($conn);
     }
-
-    $stmt->close();
-    closeDatabaseConnection($conn);
 }
 
 
+removeUser();
 addUserToDatabase();
 displayCustomers();
