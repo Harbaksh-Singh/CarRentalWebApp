@@ -3,7 +3,7 @@
 if (isset($_GET['edit'])) {
     $customer_id = $_GET['edit'];
     $update = true;
-    $record = mysqli_query($db, "SELECT * FROM customer WHERE customer_id=$customer_id");
+    $record = mysqli_query($db, "SELECT * FROM customer WHERE customer_id='$customer_id'");
 
     if (mysqli_num_rows($record) == 1) {
         $n = mysqli_fetch_array($record);
@@ -46,25 +46,25 @@ if (isset($_GET['edit'])) {
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Booking</a>
+                            <a class="nav-link" href="booking.php">Booking</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="customer.html">Customer</a>
+                            <a class="nav-link" href="customer.php">Customer</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="car.html">Car</a>
+                            <a class="nav-link" href="car.php">Car</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="employee.html">Employee</a>
+                            <a class="nav-link" href="employee.php">Employee</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="billing.html">Billing</a>
+                            <a class="nav-link" href="billing.php">Billing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="insurance.html">Insurance</a>
+                            <a class="nav-link" href="insurance.php">Insurance</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="maintenance.html">Maintenance</a>
+                            <a class="nav-link" href="maintenance.php">Maintenance</a>
                         </li>
                     </ul>
                 </div>
@@ -83,7 +83,7 @@ if (isset($_GET['edit'])) {
     </div>
 
     <?php $results = mysqli_query($db, "SELECT * FROM customer"); ?>
-    <div class="container mt-4 mb-4 border rounded p-4">
+    <div class="container mt-1 mb-4 border rounded p-4">
         <h2 class="text-center">Customers</h2>
         <table class="table table-striped ">
             <thead>
@@ -111,10 +111,10 @@ if (isset($_GET['edit'])) {
                         <td><?php echo $row['address']; ?></td>
                         <td><?php echo $row['date_of_birth']; ?></td>
                         <td>
-                            <a class="btn btn-primary" href="customerDB.php?edit=<?php echo $row['customer_id']; ?>">Edit</a>
+                            <a class="btn btn-primary" href="customer.php?edit=<?php echo $row['customer_id']; ?>">Edit</a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="customerDB.php?del=<?php echo $row['customer_id']; ?>">Delete</a>
+                            <a class="btn btn-danger" href="customer.php?del=<?php echo $row['customer_id']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -140,8 +140,10 @@ if (isset($_GET['edit'])) {
             </div>
             <div class="mb-3">
                 <label for="phone_number" class="form-label fw-bold">Phone number</label>
-                <input type="tel" class="form-control" name="phone_number" value="<?php echo $phone_number; ?>" required pattern="[0-9]+" title="Numeric characters only">
+                <input type="tel" class="form-control" name="phone_number" value="<?php echo $phone_number; ?>" required pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Phone number must be in the format XXX-XXX-XXXX">
             </div>
+
+
             <div class="mb-3">
                 <label for="address" class="form-label fw-bold">Address</label>
                 <input type="text" class="form-control" name="address" value="<?php echo $address; ?>" required>
@@ -152,7 +154,7 @@ if (isset($_GET['edit'])) {
             </div>
             <div class="mb-3">
                 <?php if ($update == true) : ?>
-                    <button class="btn btn-primary" type="submit" name="update" style="background: #556B2F;">update</button>
+                    <button class="btn btn-primary" type="submit" name="update">update</button>
                 <?php else : ?>
                     <button class="btn btn-primary" type="submit" name="save">Save</button>
                 <?php endif ?>

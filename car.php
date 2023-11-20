@@ -3,7 +3,7 @@
 if (isset($_GET['edit'])) {
     $VIN_number = $_GET['edit'];
     $update = true;
-    $record = mysqli_query($db, "SELECT * FROM car WHERE VIN_number=$VIN_number");
+    $record = mysqli_query($db, "SELECT * FROM car WHERE VIN_number='$VIN_number'");
 
     if (mysqli_num_rows($record) == 1) {
         $n = mysqli_fetch_array($record);
@@ -47,7 +47,7 @@ if (isset($_GET['edit'])) {
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Booking</a>
+                            <a class="nav-link" href="booking.php">Booking</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="customer.php">Customer</a>
@@ -56,16 +56,16 @@ if (isset($_GET['edit'])) {
                             <a class="nav-link" href="car.php">Car</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="employee.html">Employee</a>
+                            <a class="nav-link" href="employee.php">Employee</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="billing.html">Billing</a>
+                            <a class="nav-link" href="billing.php">Billing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="insurance.html">Insurance</a>
+                            <a class="nav-link" href="insurance.php">Insurance</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="maintenance.html">Maintenance</a>
+                            <a class="nav-link" href="maintenance.php">Maintenance</a>
                         </li>
                     </ul>
                 </div>
@@ -73,7 +73,7 @@ if (isset($_GET['edit'])) {
         </nav>
     </header>
 
-    <div class="container mt-4 d-flex justify-content-center">
+    <div class="container mt-3 d-flex justify-content-center">
         <?php if (isset($_SESSION['message'])) : ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <?php echo $_SESSION['message']; ?>
@@ -84,7 +84,7 @@ if (isset($_GET['edit'])) {
     </div>
 
     <?php $results = mysqli_query($db, "SELECT * FROM car"); ?>
-    <div class="container mt-4 mb-4 border rounded p-4">
+    <div class="container mt-1 mb-4 border rounded p-4">
         <h2 class="text-center">Cars</h2>
         <table class="table table-striped ">
             <thead>
@@ -114,10 +114,10 @@ if (isset($_GET['edit'])) {
                         <td><?php echo $row['cost_per_day']; ?></td>
                         <td><?php echo $row['currently_available']; ?></td>
                         <td>
-                            <a class="btn btn-primary" href="carDB.php?edit=<?php echo $row['VIN_number']; ?>">Edit</a>
+                            <a class="btn btn-primary" href="car.php?edit=<?php echo $row['VIN_number']; ?>">Edit</a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="carDB.php?del=<?php echo $row['VIN_number']; ?>">Delete</a>
+                            <a class="btn btn-danger" href="car.php?del=<?php echo $row['VIN_number']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>
@@ -154,7 +154,7 @@ if (isset($_GET['edit'])) {
                 <input type="number" class="form-control" name="cost_per_day" value="<?php echo $cost_per_day; ?>" step="0.01" min="0" required>
             </div>
             <div class="mb-3">
-                <label for="currently_available" class="form-label fw-bold">Currently Available</label>
+                <label for="currently_available" class="form-label fw-bold">Available</label>
                 <select class="form-select" name="currently_available" required>
                     <option value="Y" <?php echo ($currently_available == 'Y') ? 'selected' : ''; ?>>Yes</option>
                     <option value="N" <?php echo ($currently_available == 'N') ? 'selected' : ''; ?>>No</option>
@@ -162,7 +162,7 @@ if (isset($_GET['edit'])) {
             </div>
             <div class="mb-3">
                 <?php if ($update == true) : ?>
-                    <button class="btn btn-primary" type="submit" name="update" style="background: #556B2F;">Update</button>
+                    <button class="btn btn-primary" type="submit" name="update">Update</button>
                 <?php else : ?>
                     <button class="btn btn-primary" type="submit" name="save">Save</button>
                 <?php endif ?>

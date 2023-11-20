@@ -31,13 +31,13 @@
                             <a class="nav-link" href="car.php">Car</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="employee.html">Employee</a>
+                            <a class="nav-link" href="employee.php">Employee</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="billing.html">Billing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="insurance.html">Insurance</a>
+                            <a class="nav-link" href="insurance.">Insurance</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="maintenance.html">Maintenance</a>
