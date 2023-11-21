@@ -86,7 +86,7 @@ if (isset($_GET['edit'])) {
     <?php $results = mysqli_query($db, "SELECT * FROM car"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
         <h2 class="text-center">Cars</h2>
-        <table class="table table-striped ">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>VIN Nnumber</th>
@@ -156,6 +156,9 @@ if (isset($_GET['edit'])) {
             <div class="mb-3">
                 <label for="currently_available" class="form-label fw-bold">Available</label>
                 <select class="form-select" name="currently_available" required>
+                    <option value="" disabled selected>
+                        Select Availability
+                    </option>
                     <option value="Y" <?php echo ($currently_available == 'Y') ? 'selected' : ''; ?>>Yes</option>
                     <option value="N" <?php echo ($currently_available == 'N') ? 'selected' : ''; ?>>No</option>
                 </select>

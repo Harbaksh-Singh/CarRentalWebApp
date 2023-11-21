@@ -29,7 +29,6 @@ if (isset($_GET['edit'])) {
     <title>Customer Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="teststyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -85,7 +84,7 @@ if (isset($_GET['edit'])) {
     <?php $results = mysqli_query($db, "SELECT * FROM customer"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
         <h2 class="text-center">Customers</h2>
-        <table class="table table-striped ">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Customer ID</th>

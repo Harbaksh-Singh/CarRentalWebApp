@@ -1,20 +1,21 @@
-<?php include('bookingDB.php'); ?>
+<?php include('billingDB.php'); ?>
 <?php
 if (isset($_GET['edit'])) {
-    $booking_ID = $_GET['edit'];
+    $billing_ID = $_GET['edit'];
     $update = true;
-    $record = mysqli_query($db, "SELECT * FROM booking WHERE booking_ID='$booking_ID'");
+    $record = mysqli_query($db, "SELECT * FROM billing WHERE billing_ID='$billing_ID'");
 
     if (mysqli_num_rows($record) == 1) {
         $n = mysqli_fetch_array($record);
 
+        $billing_ID = $n['billing_ID'];
+        $oldbilling_ID = $billing_ID;
         $booking_ID = $n['booking_ID'];
-        $oldbooking_ID = $booking_ID;
-        $customer_id = $n['customer_id'];
-        $VIN_number = $n['VIN_number'];
-        $insurance_ID = $n['insurance_ID'];
-        $pick_up_day = $n['pick_up_day'];
-        $number_of_days = $n['number_of_days'];
+        $bill_date = $n['bill_date'];
+        $status = $n['status'];
+        $discount_amount = $n['discount_amount'];
+        $late_fees = $n['late_fees'];
+        $taxed_amount = $n['taxed_amount'];
         $total_amount = $n['total_amount'];
     }
 }
@@ -22,20 +23,9 @@ if (isset($_GET['edit'])) {
 
 <?php
 // Retrieve customer data from the database
-$customer_query = "SELECT * FROM customer";
-$customer_result = mysqli_query($db, $customer_query);
+$booking_query = "SELECT * FROM booking";
+$booking_result = mysqli_query($db, $booking_query);
 ?>
-<?php
-// Retrieve car data from the database
-$VIN_query = "SELECT * FROM car WHERE currently_available='Y'";
-$VIN_result = mysqli_query($db, $VIN_query);
-?>
-<?php
-// Retrieve insurance data from the database
-$insurance_query = "SELECT * FROM insurance";
-$insurance_result = mysqli_query($db, $insurance_query);
-?>
-
 
 <!DOCTYPE html>
 <html>
@@ -43,7 +33,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Booking Page</title>
+    <title>Billing Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -98,18 +88,19 @@ $insurance_result = mysqli_query($db, $insurance_query);
         <?php endif ?>
     </div>
 
-    <?php $results = mysqli_query($db, "SELECT * FROM booking"); ?>
+    <?php $results = mysqli_query($db, "SELECT * FROM billing"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
-        <h2 class="text-center">Bookings</h2>
+        <h2 class="text-center">Billings</h2>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
+                    <th>Billing ID</th>
                     <th>Booking ID</th>
-                    <th>Customer ID</th>
-                    <th>VIN Number</th>
-                    <th>Insurance ID</th>
-                    <th>Pick Up Day</th>
-                    <th>Number Of Days</th>
+                    <th>Bill Date</th>
+                    <th>Status</th>
+                    <th>Discount Amount</th>
+                    <th>Late Fees</th>
+                    <th>Taxed Amount</th>
                     <th>Total Amount</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -119,88 +110,76 @@ $insurance_result = mysqli_query($db, $insurance_query);
             <tbody>
                 <?php while ($row = mysqli_fetch_array($results)) { ?>
                     <tr>
+                        <td><?php echo $row['billing_ID']; ?></td>
                         <td><?php echo $row['booking_ID']; ?></td>
-                        <td><?php echo $row['customer_id']; ?></td>
-                        <td><?php echo $row['VIN_number']; ?></td>
-                        <td><?php echo $row['insurance_ID']; ?></td>
-                        <td><?php echo $row['pick_up_day']; ?></td>
-                        <td><?php echo $row['number_of_days']; ?></td>
+                        <td><?php echo $row['bill_date']; ?></td>
+                        <td><?php echo $row['status']; ?></td>
+                        <td><?php echo $row['discount_amount']; ?></td>
+                        <td><?php echo $row['late_fees']; ?></td>
+                        <td><?php echo $row['taxed_amount']; ?></td>
                         <td><?php echo $row['total_amount']; ?></td>
                         <td>
-                            <a class="btn btn-primary" href="booking.php?edit=<?php echo $row['booking_ID']; ?>">Edit</a>
+                            <a class="btn btn-primary" href="billing.php?edit=<?php echo $row['billing_ID']; ?>">Edit</a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="booking.php?del=<?php echo $row['booking_ID']; ?>">Delete</a>
+                            <a class="btn btn-danger" href="billing.php?del=<?php echo $row['billing_ID']; ?>">Delete</a>
                         </td>
                     </tr>
                 <?php } ?>
             </tbody>
         </table>
         <!-- FORM -->
-        <form class="border rounded p-4" id="bookingForm" method="post" action="bookingDB.php">
-            <input type="hidden" name="oldbooking_ID" value="<?php echo $oldbooking_ID; ?>">
+        <form class="border rounded p-4" id="billingForm" method="post" action="billingDB.php">
+            <input type="hidden" name="oldbilling_ID" value="<?php echo $oldbilling_ID; ?>">
+            <div class="mb-3">
+                <label for="billing_ID" class="form-label fw-bold">Billing ID</label>
+                <input type="text" class="form-control" name="billing_ID" value="<?php echo $booking_ID; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters only">
+            </div>
+            <!-- BOOKING DROPDOWN -->
             <div class="mb-3">
                 <label for="booking_ID" class="form-label fw-bold">Booking ID</label>
-                <input type="text" class="form-control" name="booking_ID" value="<?php echo $booking_ID; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters only">
-            </div>
-            <!-- CUSTOMER DROPDOWN -->
-            <div class="mb-3">
-                <label for="customer_id" class="form-label fw-bold">Customer ID</label>
-                <select class="form-select" name="customer_id" required>
+                <select class="form-select" name="booking_ID" required>
                     <option value="" disabled selected>
-                        Select Customer
+                        Select Booking
                     </option>
                     <?php
-                    while ($customer_row = mysqli_fetch_assoc($customer_result)) {
-                        $selected = ($customer_row['customer_id'] == $customer_id) ? 'selected' : '';
-                        echo "<option value='{$customer_row['customer_id']}' $selected>{$customer_row['customer_id']} - {$customer_row['first_name']} {$customer_row['last_name']}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
-            <!-- CAR DROPDOWN -->
-            <div class="mb-3">
-                <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
-                <select class="form-select" name="VIN_number" required>
-                    <option value="" disabled selected>
-                        Select Vehicle
-                    </option>
-                    <?php
-                    while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
-                        $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
-                        echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']} - {$VIN_row['model']} - {$VIN_row['year']} - {$VIN_row['cost_per_day']}</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-
-            <!-- INSURANCE DROPDOWN -->
-            <div class="mb-3">
-                <label for="insurance_ID" class="form-label fw-bold">Insurance ID</label>
-                <select class="form-select" name="insurance_ID" required>
-                    <option value="" disabled selected>
-                        Select Insurance
-                    </option>
-                    <?php
-                    while ($insurance_row = mysqli_fetch_assoc($insurance_result)) {
-                        $selected = ($insurance_row['insurance_id'] == $insurance_ID) ? 'selected' : '';
-                        echo "<option value='{$insurance_row['insurance_id']}' $selected>{$insurance_row['insurance_id']} - {$insurance_row['insurance_provider']} - {$insurance_row['coverage_type']} - {$insurance_row['cost_per_day']}</option>";
+                    while ($booking_row = mysqli_fetch_assoc($booking_result)) {
+                        $selected = ($booking_row['booking_ID'] == $booking_ID) ? 'selected' : '';
+                        echo "<option value='{$booking_row['booking_ID']}' $selected>{$booking_row['booking_ID']} - {$booking_row['total_amount']}</option>";
                     }
                     ?>
                 </select>
             </div>
 
             <div class="mb-3">
-                <label for="pick_up_day" class="form-label fw-bold">Pick Up Day</label>
-                <input type="date" class="form-control" name="pick_up_day" value="<?php echo $pick_up_day; ?>" required pattern="[0-9]+" title="Numeric characters only">
+                <label for="bill_date" class="form-label fw-bold">Bill Date</label>
+                <input type="date" class="form-control" name="bill_date" value="<?php echo $bill_date; ?>" required pattern="[0-9]+" title="Numeric characters only">
+            </div>
+
+            <div class="mb-3">
+                <label for="status" class="form-label fw-bold">Status</label>
+                <select class="form-select" name="status" required>
+                    <option value="" disabled selected>
+                        Select Status
+                    </option>
+                    <option value="BILLED" <?php echo ($status == 'BILLED') ? 'selected' : ''; ?>>BILLED</option>
+                    <option value="NOT BILLED" <?php echo ($status == 'NOT BILLED') ? 'selected' : ''; ?>>NOT BILLED</option>
+                </select>
             </div>
             <div class="mb-3">
-                <label for="number_of_days" class="form-label fw-bold">Number Of Days</label>
-                <input type="number" class="form-control" name="number_of_days" value="<?php echo $number_of_days; ?>" required>
+                <label for="discount_amount" class="form-label fw-bold">Discount Amount</label>
+                <input type="number" class="form-control" name="discount_amount" value="<?php echo $discount_amount; ?>" required>
             </div>
             <div class="mb-3">
-                <label for="total_amount" class="form-label fw-bold">Total Amount</label>
+                <label for="late_fees" class="form-label fw-bold">Late Fees</label>
+                <input type="number" class="form-control" name="late_fees" value="<?php echo $late_fees; ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="taxed_amount" class="form-label fw-bold">Taxed Amount</label>
+                <input type="number" class="form-control" name="taxed_amount" value="<?php echo $taxed_amount; ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="total_amount" class="form-label fw-bold">Bill Amount</label>
                 <span class="form-control"><?php echo $total_amount; ?></span>
             </div>
 

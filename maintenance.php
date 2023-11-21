@@ -25,6 +25,11 @@ if (isset($_GET['edit'])) {
 $VIN_query = "SELECT VIN_number, make FROM car";
 $VIN_result = mysqli_query($db, $VIN_query);
 ?>
+<?php
+// Retrieve employee data from the database
+$employee_query = "SELECT employee_ID, first_name FROM employee";
+$employee_result = mysqli_query($db, $employee_query);
+?>
 
 <!DOCTYPE html>
 <html>
@@ -90,8 +95,8 @@ $VIN_result = mysqli_query($db, $VIN_query);
 
     <?php $results = mysqli_query($db, "SELECT * FROM maintenance"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
-        <h2 class="text-center">Customers</h2>
-        <table class="table table-striped ">
+        <h2 class="text-center">Maintenance</h2>
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Maintenance ID</th>
@@ -132,21 +137,40 @@ $VIN_result = mysqli_query($db, $VIN_query);
                 <label for="maintenance_ID" class="form-label fw-bold">Maintenance ID</label>
                 <input type="number" class="form-control" name="maintenance_ID" value="<?php echo $maintenance_ID; ?>" required>
             </div>
-             <!-- CAR DROPDOWN -->
-             <div class="mb-3">
-            <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
-            <select class="form-select" name="VIN_number" required>
-                <?php
-                while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
-                    $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
-                    echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
-                }
-                ?>
-            </select>
+            <!-- CAR DROPDOWN -->
+            <div class="mb-3">
+                <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
+                <select class="form-select" name="VIN_number" required>
+                    <option value="" disabled selected>
+                        Select Vehicle
+                    </option>
+                    <?php
+                    while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
+                        $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
+                        echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
+                    }
+                    ?>
+                </select>
             </div>
+            <!-- EMPLOYEE DROPDOWN -->
+            <div class="mb-3">
+                <label for="employee_ID" class="form-label fw-bold">Employee ID</label>
+                <select class="form-select" name="employee_ID" required>
+                    <option value="" disabled selected>
+                        Select Employee
+                    </option>
+                    <?php
+                    while ($employee_row = mysqli_fetch_assoc($employee_result)) {
+                        $selected = ($employee_row['employee_ID'] == $VIN_number) ? 'selected' : '';
+                        echo "<option value='{$employee_row['employee_ID']}' $selected>{$employee_row['employee_ID']} - {$employee_row['first_name']}</option>";
+                    }
+                    ?>
+                </select>
+            </div>
+
             <div class="mb-3">
                 <label for="maintenance_type" class="form-label fw-bold">Maintenance Type</label>
-                <input type="text" class="form-control" name="maintenance_type" value="<?php echo $maintenance_type; ?>" required pattern="[A-Za-z]+">
+                <input type="text" class="form-control" name="maintenance_type" value="<?php echo $maintenance_type; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="maintenance_date" class="form-label fw-bold">Maintenance Date</label>
@@ -157,12 +181,8 @@ $VIN_result = mysqli_query($db, $VIN_query);
                 <input type="text" class="form-control" name="description" value="<?php echo $description; ?>" required>
             </div>
             <div class="mb-3">
-                <label for="employee_ID" class="form-label fw-bold">Employee ID</label>
-                <input type="text" class="form-control" name="employee_ID" value="<?php echo $employee_ID; ?>" required pattern="[A-Za-z0-9]+">
-            </div>
-            <div class="mb-3">
                 <label for="total_cost" class="form-label fw-bold">Total Cost</label>
-                <input type="number" class="form-control" name="total_cost" value="<?php echo $total_cost; ?>" required>
+                <input type="number" step="any" class="form-control" name="total_cost" value="<?php echo $total_cost; ?>" required>
             </div>
             <div class="mb-3">
                 <?php if ($update == true) : ?>
