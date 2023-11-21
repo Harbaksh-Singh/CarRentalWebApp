@@ -51,7 +51,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <a class="navbar-brand" href="index.php">CityZoom Rentals</a>

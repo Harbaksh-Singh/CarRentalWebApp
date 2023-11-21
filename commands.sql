@@ -59,7 +59,7 @@ CREATE TABLE billing(
     discount_amount DECIMAL(10, 2) DEFAULT '0',
     late_fees DECIMAL(10, 2),
     taxed_amount DECIMAL(10, 2),
-    total_amount DECIMAL(10, 2) NOT NULL
+    bill_amount DECIMAL(10, 2) NOT NULL
 );
 CREATE TABLE maintenance (
     maintenance_ID INT PRIMARY KEY,

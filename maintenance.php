@@ -25,6 +25,11 @@ if (isset($_GET['edit'])) {
 $VIN_query = "SELECT VIN_number, make FROM car";
 $VIN_result = mysqli_query($db, $VIN_query);
 ?>
+<?php
+// Retrieve employee data from the database
+$employee_query = "SELECT employee_ID, first_name FROM employee";
+$employee_result = mysqli_query($db, $employee_query);
+?>
 
 <!DOCTYPE html>
 <html>
@@ -159,9 +164,20 @@ $VIN_result = mysqli_query($db, $VIN_query);
                 <label for="description" class="form-label fw-bold">Description</label>
                 <input type="text" class="form-control" name="description" value="<?php echo $description; ?>" required>
             </div>
+            <!-- EMPLOYEE DROPDOWN -->
             <div class="mb-3">
                 <label for="employee_ID" class="form-label fw-bold">Employee ID</label>
-                <input type="text" class="form-control" name="employee_ID" value="<?php echo $employee_ID; ?>" required>
+                <select class="form-select" name="employee_ID" required>
+                    <option value="" disabled selected>
+                        Select Employee
+                    </option>
+                    <?php
+                    while ($employee_row = mysqli_fetch_assoc($employee_result)) {
+                        $selected = ($employee_row['employee_ID'] == $VIN_number) ? 'selected' : '';
+                        echo "<option value='{$employee_row['employee_ID']}' $selected>{$employee_row['employee_ID']} - {$employee_row['first_name']}</option>";
+                    }
+                    ?>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="total_cost" class="form-label fw-bold">Total Cost</label>
