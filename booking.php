@@ -51,7 +51,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center w-100">
                     <a class="navbar-brand" href="index.php">CityZoom Rentals</a>
@@ -138,7 +138,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
         </table>
         <!-- FORM -->
         <form class="border rounded p-4" id="bookingForm" method="post" action="bookingDB.php">
-            <input type="hidden" name="booking_ID" value="<?php echo $booking_ID; ?>">
+            <input type="hidden" name="oldbooking_ID" value="<?php echo $oldbooking_ID; ?>">
             <div class="mb-3">
                 <label for="booking_ID" class="form-label fw-bold">Booking ID</label>
                 <input type="text" class="form-control" name="booking_ID" value="<?php echo $booking_ID; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters only">
@@ -201,8 +201,10 @@ $insurance_result = mysqli_query($db, $insurance_query);
             </div>
             <div class="mb-3">
                 <label for="total_amount" class="form-label fw-bold">Total Amount</label>
-                <input type="text" class="form-control" name="total_amount" value="<?php echo $total_amount; ?>" required>
+
+                <span class="form-control"><?php echo $total_amount; ?></span>
             </div>
+
             <div class="mb-3">
                 <?php if ($update == true) : ?>
                     <button class="btn btn-primary" type="submit" name="update">update</button>

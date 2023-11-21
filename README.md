@@ -70,3 +70,6 @@ $VIN_result = mysqli_query($db, $customer_query);
 $customer_query = "SELECT customer_id, first_name FROM customer";
 $customer_result = mysqli_query($db, $customer_query);
 ?>
+
+                <label for="total_amount" class="form-label fw-bold">Total Amount</label>
+                <input type="text" class="form-control" name="total_amount" value="<?php echo $total_amount; ?>" readonly>

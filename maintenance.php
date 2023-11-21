@@ -180,7 +180,6 @@ $employee_result = mysqli_query($db, $employee_query);
                 <label for="description" class="form-label fw-bold">Description</label>
                 <input type="text" class="form-control" name="description" value="<?php echo $description; ?>" required>
             </div>
-
             <div class="mb-3">
                 <label for="total_cost" class="form-label fw-bold">Total Cost</label>
                 <input type="number" step="any" class="form-control" name="total_cost" value="<?php echo $total_cost; ?>" required>
