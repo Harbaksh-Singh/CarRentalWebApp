@@ -84,7 +84,7 @@ if (isset($_GET['edit'])) {
     <?php $results = mysqli_query($db, "SELECT * FROM employee"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
         <h2 class="text-center">Employees</h2>
-        <table class="table table-striped ">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Employee ID</th>

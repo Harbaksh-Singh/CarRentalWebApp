@@ -23,7 +23,7 @@ if (isset($_GET['edit'])) {
 
 <?php
 // Retrieve customer data from the database
-$booking_query = "SELECT booking_ID, total_amount FROM booking";
+$booking_query = "SELECT * FROM booking";
 $booking_result = mysqli_query($db, $booking_query);
 ?>
 
@@ -91,7 +91,7 @@ $booking_result = mysqli_query($db, $booking_query);
     <?php $results = mysqli_query($db, "SELECT * FROM billing"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
         <h2 class="text-center">Billings</h2>
-        <table class="table table-striped ">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Billing ID</th>
@@ -159,6 +159,9 @@ $booking_result = mysqli_query($db, $booking_query);
             <div class="mb-3">
                 <label for="status" class="form-label fw-bold">Status</label>
                 <select class="form-select" name="status" required>
+                    <option value="" disabled selected>
+                        Select Status
+                    </option>
                     <option value="BILLED" <?php echo ($status == 'BILLED') ? 'selected' : ''; ?>>BILLED</option>
                     <option value="NOT BILLED" <?php echo ($status == 'NOT BILLED') ? 'selected' : ''; ?>>NOT BILLED</option>
                 </select>

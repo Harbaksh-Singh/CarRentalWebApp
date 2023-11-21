@@ -95,8 +95,8 @@ $employee_result = mysqli_query($db, $employee_query);
 
     <?php $results = mysqli_query($db, "SELECT * FROM maintenance"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
-        <h2 class="text-center">Customers</h2>
-        <table class="table table-striped ">
+        <h2 class="text-center">Maintenance</h2>
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Maintenance ID</th>

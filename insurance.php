@@ -144,7 +144,7 @@ if (isset($_GET['edit'])) {
         <div class="container mt-1 mb-4 border rounded p-4">
             <h2 class="text-center">Insurance</h2>
             <br>
-            <table class="table table-striped ">
+            <table class="table table-striped table-bordered">
                 <thead>
                     <tr>
                         <th>Insurance ID</th>

@@ -22,17 +22,17 @@ if (isset($_GET['edit'])) {
 
 <?php
 // Retrieve customer data from the database
-$customer_query = "SELECT customer_id, first_name FROM customer";
+$customer_query = "SELECT * FROM customer";
 $customer_result = mysqli_query($db, $customer_query);
 ?>
 <?php
 // Retrieve car data from the database
-$VIN_query = "SELECT VIN_number, make FROM car";
+$VIN_query = "SELECT * FROM car WHERE currently_available='Y'";
 $VIN_result = mysqli_query($db, $VIN_query);
 ?>
 <?php
 // Retrieve insurance data from the database
-$insurance_query = "SELECT insurance_id, insurance_provider FROM insurance";
+$insurance_query = "SELECT * FROM insurance";
 $insurance_result = mysqli_query($db, $insurance_query);
 ?>
 
@@ -101,7 +101,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
     <?php $results = mysqli_query($db, "SELECT * FROM booking"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
         <h2 class="text-center">Bookings</h2>
-        <table class="table table-striped ">
+        <table class="table table-striped table-bordered">
             <thead>
                 <tr>
                     <th>Booking ID</th>
@@ -153,7 +153,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
                     <?php
                     while ($customer_row = mysqli_fetch_assoc($customer_result)) {
                         $selected = ($customer_row['customer_id'] == $customer_id) ? 'selected' : '';
-                        echo "<option value='{$customer_row['customer_id']}' $selected>{$customer_row['customer_id']} - {$customer_row['first_name']}</option>";
+                        echo "<option value='{$customer_row['customer_id']}' $selected>{$customer_row['customer_id']} - {$customer_row['first_name']} {$customer_row['last_name']}</option>";
                     }
                     ?>
                 </select>
@@ -169,7 +169,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
                     <?php
                     while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
                         $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
-                        echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
+                        echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']} - {$VIN_row['model']} - {$VIN_row['year']} - {$VIN_row['cost_per_day']}</option>";
                     }
                     ?>
                 </select>
@@ -185,7 +185,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
                     <?php
                     while ($insurance_row = mysqli_fetch_assoc($insurance_result)) {
                         $selected = ($insurance_row['insurance_id'] == $insurance_ID) ? 'selected' : '';
-                        echo "<option value='{$insurance_row['insurance_id']}' $selected>{$insurance_row['insurance_id']} - {$insurance_row['insurance_provider']}</option>";
+                        echo "<option value='{$insurance_row['insurance_id']}' $selected>{$insurance_row['insurance_id']} - {$insurance_row['insurance_provider']} - {$insurance_row['coverage_type']} - {$insurance_row['cost_per_day']}</option>";
                     }
                     ?>
                 </select>

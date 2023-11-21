@@ -46,7 +46,26 @@ if (isset($_POST['update'])) {
 }
 if (isset($_GET['del'])) {
     $VIN_number = $_GET['del'];
-    mysqli_query($db, "DELETE FROM car WHERE VIN_number='$VIN_number'");
-    $_SESSION['message'] = "Car deleted!";
+
+    // Attempt to delete records from child tables (e.g., "booking" and "maintenance") that reference the car
+    $delete_booking_query = "DELETE FROM booking WHERE VIN_number='$VIN_number'";
+    $delete_billing_query = "DELETE FROM billing WHERE booking_ID IN (SELECT booking_ID FROM booking WHERE VIN_number='$VIN_number')";
+    $delete_maintenance_query = "DELETE FROM maintenance WHERE VIN_number='$VIN_number'";
+
+    if (mysqli_query($db, $delete_billing_query) && mysqli_query($db, $delete_booking_query) && mysqli_query($db, $delete_maintenance_query)) {
+        // Child records deleted successfully
+
+        // Now, delete the car record
+        $delete_car_query = "DELETE FROM car WHERE VIN_number='$VIN_number'";
+        if (mysqli_query($db, $delete_car_query)) {
+            // Car record deleted successfully
+            $_SESSION['message'] = "Car Deleted!";
+        } else {
+            $_SESSION['error_message'] = "Error deleting the car record.";
+        }
+    } else {
+        $_SESSION['error_message'] = "Error deleting related records (e.g., bookings and maintenance).";
+    }
+
     header('location: car.php');
 }
