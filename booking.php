@@ -201,7 +201,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
             </div>
             <div class="mb-3">
                 <label for="total_amount" class="form-label fw-bold">Total Amount</label>
-                <input type="text" class="form-control" name="total_amount" value="<?php echo $total_amount; ?>" required>
+                <input type="number" class="form-control" name="total_amount" value="<?php echo $total_amount; ?>" required>
             </div>
             <div class="mb-3">
                 <?php if ($update == true) : ?>
