@@ -10,11 +10,13 @@ if (isset($_GET['edit'])) {
 
         $billing_ID = $n['billing_ID'];
         $oldbilling_ID = $billing_ID;
+        $booking_ID = $n['booking_ID'];
         $bill_date = $n['bill_date'];
         $status = $n['status'];
         $discount_amount = $n['discount_amount'];
         $late_fees = $n['late_fees'];
         $taxed_amount = $n['taxed_amount'];
+        $total_amount = $n['total_amount'];
     }
 }
 ?>
@@ -95,12 +97,11 @@ $booking_result = mysqli_query($db, $booking_query);
                     <th>Billing ID</th>
                     <th>Booking ID</th>
                     <th>Bill Date</th>
-                    <th>Insurance ID</th>
                     <th>Status</th>
                     <th>Discount Amount</th>
                     <th>Late Fees</th>
                     <th>Taxed Amount</th>
-                    <th>Bill Amount</th>
+                    <th>Total Amount</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -113,9 +114,9 @@ $booking_result = mysqli_query($db, $booking_query);
                         <td><?php echo $row['booking_ID']; ?></td>
                         <td><?php echo $row['bill_date']; ?></td>
                         <td><?php echo $row['status']; ?></td>
-                        <td><?php echo $row['insurance_ID']; ?></td>
-                        <td><?php echo $row['pick_up_day']; ?></td>
-                        <td><?php echo $row['number_of_days']; ?></td>
+                        <td><?php echo $row['discount_amount']; ?></td>
+                        <td><?php echo $row['late_fees']; ?></td>
+                        <td><?php echo $row['taxed_amount']; ?></td>
                         <td><?php echo $row['total_amount']; ?></td>
                         <td>
                             <a class="btn btn-primary" href="billing.php?edit=<?php echo $row['billing_ID']; ?>">Edit</a>
@@ -154,10 +155,7 @@ $booking_result = mysqli_query($db, $booking_query);
                 <label for="bill_date" class="form-label fw-bold">Bill Date</label>
                 <input type="date" class="form-control" name="bill_date" value="<?php echo $bill_date; ?>" required pattern="[0-9]+" title="Numeric characters only">
             </div>
-            <div class="mb-3">
-                <label for="pick_up_day" class="form-label fw-bold">Pick Up Day</label>
-                <input type="date" class="form-control" name="pick_up_day" value="<?php echo $pick_up_day; ?>" required pattern="[0-9]+" title="Numeric characters only">
-            </div>
+
             <div class="mb-3">
                 <label for="status" class="form-label fw-bold">Status</label>
                 <select class="form-select" name="status" required>
@@ -176,6 +174,10 @@ $booking_result = mysqli_query($db, $booking_query);
             <div class="mb-3">
                 <label for="taxed_amount" class="form-label fw-bold">Taxed Amount</label>
                 <input type="number" class="form-control" name="taxed_amount" value="<?php echo $taxed_amount; ?>" required>
+            </div>
+            <div class="mb-3">
+                <label for="total_amount" class="form-label fw-bold">Total Amount</label>
+                <input type="number" class="form-control" name="total_amount" value="<?php echo $total_amount; ?>" required>
             </div>
 
             <div class="mb-3">
