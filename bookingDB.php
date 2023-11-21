@@ -27,12 +27,21 @@ if (isset($_POST['save'])) {
     $cost_row = mysqli_fetch_assoc($cost_result);
     $cost_per_day = (float)$cost_row['cost_per_day'];
 
-    // $total_amount = $_POST["total_amount"];
-    $total_amount = $number_of_days * $cost_per_day;
+    $insurance_query = "SELECT * FROM insurance WHERE insurance_ID = '$insurance_ID'";
+    $insurance_result = mysqli_query($db, $insurance_query);
+    $insurance_row = mysqli_fetch_assoc($insurance_result);
+    $insurance_cost_per_day = (float)$insurance_row['cost_per_day'];
+
+    $total_amount = $number_of_days * ($cost_per_day + $insurance_cost_per_day);
 
     mysqli_query($db, "INSERT INTO booking (booking_ID, customer_id, VIN_number, insurance_ID, pick_up_day, number_of_days, total_amount) VALUES ('$booking_ID', '$customer_id','$VIN_number', '$insurance_ID','$pick_up_day', '$number_of_days','$total_amount')");
+    mysqli_query($db, "UPDATE car SET currently_available='N' WHERE VIN_number='$VIN_number'");
+
+    
     $_SESSION['message'] = "Booking Saved";
     header('location: booking.php');
+
+
 }
 if (isset($_POST['update'])) {
 
@@ -66,6 +75,12 @@ if (isset($_POST['update'])) {
 if (isset($_GET['del'])) {
     $booking_ID = $_GET['del'];
 
+    // Fetch VIN_number associated with the booking
+    $get_vin_query = "SELECT VIN_number FROM booking WHERE booking_ID='$booking_ID'";
+    $get_vin_result = mysqli_query($db, $get_vin_query);
+    $vin_row = mysqli_fetch_assoc($get_vin_result);
+    $VIN_number = $vin_row['VIN_number'];
+
     // Attempt to delete records from child tables (e.g., "billing" table)
     $delete_billing_query = "DELETE FROM billing WHERE booking_ID='$booking_ID'";
     if (mysqli_query($db, $delete_billing_query)) {
@@ -74,6 +89,8 @@ if (isset($_GET['del'])) {
         // Now, delete the "booking" record
         $delete_booking_query = "DELETE FROM booking WHERE booking_ID='$booking_ID'";
         if (mysqli_query($db, $delete_booking_query)) {
+            // Update car availability status
+            mysqli_query($db, "UPDATE car SET currently_available='Y' WHERE VIN_number='$VIN_number'");
             // Booking record deleted successfully
             $_SESSION['message'] = "Booking Deleted!";
         } else {
