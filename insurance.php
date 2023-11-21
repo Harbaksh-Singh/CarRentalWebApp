@@ -106,8 +106,8 @@ if (isset($_GET['edit'])) {
     </header>
 
     <div class="container">
-        <h1 class="mt-5">Explore Our Insurance Coverage Types</h1>
-        <p class="lead">
+        <h1 class="mt-5 text-center">Explore Our Insurance Coverage Types</h1>
+        <p class="lead text-center">
             Choose the perfect coverage for your journey with CityZoom Rentals.
         </p>
 
