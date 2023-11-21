@@ -201,7 +201,6 @@ $insurance_result = mysqli_query($db, $insurance_query);
             </div>
             <div class="mb-3">
                 <label for="total_amount" class="form-label fw-bold">Total Amount</label>
-
                 <span class="form-control"><?php echo $total_amount; ?></span>
             </div>
 

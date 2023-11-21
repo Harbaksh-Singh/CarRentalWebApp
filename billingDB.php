@@ -8,10 +8,10 @@ $oldbilling_ID = "";
 $booking_ID = "";
 $bill_date = "";
 $status = "";
-$discount_amount = "";
-$late_fees = "";
-$taxed_amount = "";
-$total_amount = "";
+$discount_amount = 0;
+$late_fees = 0;
+$taxed_amount = 0;
+$total_amount = 0;
 $update = false;
 
 if (isset($_POST['save'])) {
@@ -23,6 +23,13 @@ if (isset($_POST['save'])) {
     $late_fees = $_POST["late_fees"];
     $taxed_amount = $_POST["taxed_amount"];
     $total_amount = $_POST["total_amount"];
+
+    $cost_query = "SELECT * FROM booking WHERE booking_ID = '$booking_ID'";
+    $cost_result = mysqli_query($db, $cost_query);
+    $cost_row = mysqli_fetch_assoc($cost_result);
+    $booking_total_cost = (float)$cost_row['total_amount'];
+
+    $total_amount = $late_fees + $taxed_amount + $booking_total_cost - $discount_amount;
 
     mysqli_query($db, "INSERT INTO billing (billing_ID, booking_ID, bill_date, status, discount_amount, late_fees, taxed_amount, total_amount) VALUES ('$billing_ID', '$booking_ID', '$bill_date','$status', '$discount_amount', '$late_fees','$taxed_amount', '$total_amount')");
     $_SESSION['message'] = "Bill Saved";

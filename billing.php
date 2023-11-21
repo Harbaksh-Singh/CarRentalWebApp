@@ -179,8 +179,8 @@ $booking_result = mysqli_query($db, $booking_query);
                 <input type="number" class="form-control" name="taxed_amount" value="<?php echo $taxed_amount; ?>" required>
             </div>
             <div class="mb-3">
-                <label for="total_amount" class="form-label fw-bold">Total Amount</label>
-                <input type="number" class="form-control" name="total_amount" value="<?php echo $total_amount; ?>" required>
+                <label for="total_amount" class="form-label fw-bold">Bill Amount</label>
+                <span class="form-control"><?php echo $total_amount; ?></span>
             </div>
 
             <div class="mb-3">
