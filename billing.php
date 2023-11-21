@@ -89,7 +89,7 @@ $total_result = mysqli_query($db, $total_query);
 
     <?php $results = mysqli_query($db, "SELECT * FROM billing"); ?>
     <div class="container mt-1 mb-4 border rounded p-4">
-        <h2 class="text-center">Bookings</h2>
+        <h2 class="text-center">Billings</h2>
         <table class="table table-striped ">
             <thead>
                 <tr>
@@ -131,6 +131,10 @@ $total_result = mysqli_query($db, $total_query);
         <!-- FORM -->
         <form class="border rounded p-4" id="billingForm" method="post" action="billingSB.php">
             <input type="hidden" name="booking_ID" value="<?php echo $booking_ID; ?>">
+            <div class="mb-3">
+                <label for="billing_ID" class="form-label fw-bold">Billing ID</label>
+                <input type="text" class="form-control" name="billing_ID" value="<?php echo $booking_ID; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters only">
+            </div>
             <div class="mb-3">
                 <label for="billing_ID" class="form-label fw-bold">Booking ID</label>
                 <input type="text" class="form-control" name="billing_ID" value="<?php echo $booking_ID; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters only">
