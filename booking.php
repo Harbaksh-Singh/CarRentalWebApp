@@ -43,14 +43,14 @@ $insurance_result = mysqli_query($db, $insurance_query);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Bookings Page</title>
+    <title>Booking Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-<header>
+    <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
                 <div class="d-flex justify-content-between align-items-center w-100">
@@ -62,7 +62,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Booking</a>
+                            <a class="nav-link" href="booking.php">Booking</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="customer.php">Customer</a>
@@ -74,13 +74,13 @@ $insurance_result = mysqli_query($db, $insurance_query);
                             <a class="nav-link" href="employee.php">Employee</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="billing.html">Billing</a>
+                            <a class="nav-link" href="billing.php">Billing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="insurance.">Insurance</a>
+                            <a class="nav-link" href="insurance.php">Insurance</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="maintenance.html">Maintenance</a>
+                            <a class="nav-link" href="maintenance.php">Maintenance</a>
                         </li>
                     </ul>
                 </div>
@@ -145,43 +145,50 @@ $insurance_result = mysqli_query($db, $insurance_query);
             </div>
             <!-- CUSTOMER DROPDOWN -->
             <div class="mb-3">
-            <label for="customer_id" class="form-label fw-bold">Customer ID</label>
-            <select class="form-select" name="customer_id" required>
-                <?php
-                while ($customer_row = mysqli_fetch_assoc($customer_result)) {
-                    $selected = ($customer_row['customer_id'] == $customer_id) ? 'selected' : '';
-                    echo "<option value='{$customer_row['customer_id']}' $selected>{$customer_row['customer_id']} - {$customer_row['first_name']}</option>";
-
-                }
-                ?>
-            </select>
+                <label for="customer_id" class="form-label fw-bold">Customer ID</label>
+                <select class="form-select" name="customer_id" required>
+                    <option value="" disabled selected>
+                        Select Customer
+                    </option>
+                    <?php
+                    while ($customer_row = mysqli_fetch_assoc($customer_result)) {
+                        $selected = ($customer_row['customer_id'] == $customer_id) ? 'selected' : '';
+                        echo "<option value='{$customer_row['customer_id']}' $selected>{$customer_row['customer_id']} - {$customer_row['first_name']}</option>";
+                    }
+                    ?>
+                </select>
             </div>
 
             <!-- CAR DROPDOWN -->
             <div class="mb-3">
-            <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
-            <select class="form-select" name="VIN_number" required>
-                <?php
-                while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
-                    $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
-                    echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
-                }
-                ?>
-            </select>
+                <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
+                <select class="form-select" name="VIN_number" required>
+                    <option value="" disabled selected>
+                        Select Vehicle
+                    </option>
+                    <?php
+                    while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
+                        $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
+                        echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
+                    }
+                    ?>
+                </select>
             </div>
 
             <!-- INSURANCE DROPDOWN -->
             <div class="mb-3">
-            <label for="insurance_ID" class="form-label fw-bold">Insurance ID</label>
-            <select class="form-select" name="insurance_ID" required>
-                <?php
-                while ($insurance_row = mysqli_fetch_assoc($insurance_result)) {
-                    $selected = ($insurance_row['insurance_id'] == $insurance_ID) ? 'selected' : '';
-                    echo "<option value='{$insurance_row['insurance_id']}' $selected>{$insurance_row['insurance_id']} - {$insurance_row['insurance_provider']}</option>";
-
-                }
-                ?>
-            </select>
+                <label for="insurance_ID" class="form-label fw-bold">Insurance ID</label>
+                <select class="form-select" name="insurance_ID" required>
+                    <option value="" disabled selected>
+                        Select Insurance
+                    </option>
+                    <?php
+                    while ($insurance_row = mysqli_fetch_assoc($insurance_result)) {
+                        $selected = ($insurance_row['insurance_id'] == $insurance_ID) ? 'selected' : '';
+                        echo "<option value='{$insurance_row['insurance_id']}' $selected>{$insurance_row['insurance_id']} - {$insurance_row['insurance_provider']}</option>";
+                    }
+                    ?>
+                </select>
             </div>
 
             <div class="mb-3">
@@ -190,7 +197,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
             </div>
             <div class="mb-3">
                 <label for="number_of_days" class="form-label fw-bold">Number Of Days</label>
-                <input type="text" class="form-control" name="number_of_days" value="<?php echo $number_of_days; ?>" required>
+                <input type="number" class="form-control" name="number_of_days" value="<?php echo $number_of_days; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="total_amount" class="form-label fw-bold">Total Amount</label>
@@ -198,7 +205,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
             </div>
             <div class="mb-3">
                 <?php if ($update == true) : ?>
-                    <button class="btn btn-primary" type="submit" name="update" style="background: #556B2F;">update</button>
+                    <button class="btn btn-primary" type="submit" name="update">update</button>
                 <?php else : ?>
                     <button class="btn btn-primary" type="submit" name="save">Save</button>
                 <?php endif ?>

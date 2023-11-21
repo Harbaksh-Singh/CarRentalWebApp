@@ -22,7 +22,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Booking</a>
+                            <a class="nav-link" href="booking.php">Booking</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="customer.php">Customer</a>
@@ -34,13 +34,13 @@
                             <a class="nav-link" href="employee.php">Employee</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="billing.html">Billing</a>
+                            <a class="nav-link" href="billing.php">Billing</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="insurance.">Insurance</a>
+                            <a class="nav-link" href="insurance.php">Insurance</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="maintenance.html">Maintenance</a>
+                            <a class="nav-link" href="maintenance.php">Maintenance</a>
                         </li>
                     </ul>
                 </div>

@@ -132,21 +132,24 @@ $VIN_result = mysqli_query($db, $VIN_query);
                 <label for="maintenance_ID" class="form-label fw-bold">Maintenance ID</label>
                 <input type="number" class="form-control" name="maintenance_ID" value="<?php echo $maintenance_ID; ?>" required>
             </div>
-             <!-- CAR DROPDOWN -->
-             <div class="mb-3">
-            <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
-            <select class="form-select" name="VIN_number" required>
-                <?php
-                while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
-                    $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
-                    echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
-                }
-                ?>
-            </select>
+            <!-- CAR DROPDOWN -->
+            <div class="mb-3">
+                <label for="VIN_number" class="form-label fw-bold">VIN Number</label>
+                <select class="form-select" name="VIN_number" required>
+                    <option value="" disabled selected>
+                        Select Vehicle
+                    </option>
+                    <?php
+                    while ($VIN_row = mysqli_fetch_assoc($VIN_result)) {
+                        $selected = ($VIN_row['VIN_number'] == $VIN_number) ? 'selected' : '';
+                        echo "<option value='{$VIN_row['VIN_number']}' $selected>{$VIN_row['VIN_number']} - {$VIN_row['make']}</option>";
+                    }
+                    ?>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="maintenance_type" class="form-label fw-bold">Maintenance Type</label>
-                <input type="text" class="form-control" name="maintenance_type" value="<?php echo $maintenance_type; ?>" required pattern="[A-Za-z]+">
+                <input type="text" class="form-control" name="maintenance_type" value="<?php echo $maintenance_type; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="maintenance_date" class="form-label fw-bold">Maintenance Date</label>
@@ -158,11 +161,11 @@ $VIN_result = mysqli_query($db, $VIN_query);
             </div>
             <div class="mb-3">
                 <label for="employee_ID" class="form-label fw-bold">Employee ID</label>
-                <input type="text" class="form-control" name="employee_ID" value="<?php echo $employee_ID; ?>" required pattern="[A-Za-z0-9]+">
+                <input type="text" class="form-control" name="employee_ID" value="<?php echo $employee_ID; ?>" required>
             </div>
             <div class="mb-3">
                 <label for="total_cost" class="form-label fw-bold">Total Cost</label>
-                <input type="number" class="form-control" name="total_cost" value="<?php echo $total_cost; ?>" required>
+                <input type="number" step="any" class="form-control" name="total_cost" value="<?php echo $total_cost; ?>" required>
             </div>
             <div class="mb-3">
                 <?php if ($update == true) : ?>
