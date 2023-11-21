@@ -130,7 +130,7 @@ $booking_result = mysqli_query($db, $booking_query);
         </table>
         <!-- FORM -->
         <form class="border rounded p-4" id="billingForm" method="post" action="billingDB.php">
-            <input type="hidden" name="booking_ID" value="<?php echo $booking_ID; ?>">
+            <input type="hidden" name="oldbilling_ID" value="<?php echo $oldbilling_ID; ?>">
             <div class="mb-3">
                 <label for="billing_ID" class="form-label fw-bold">Billing ID</label>
                 <input type="text" class="form-control" name="billing_ID" value="<?php echo $booking_ID; ?>" required pattern="[A-Za-z0-9]+" title="Alphanumeric characters only">
@@ -185,7 +185,7 @@ $booking_result = mysqli_query($db, $booking_query);
 
             <div class="mb-3">
                 <?php if ($update == true) : ?>
-                    <button class="btn btn-primary" type="submit" name="update">update</button>
+                    <button class="btn btn-primary" type="submit" name="update">Update</button>
                 <?php else : ?>
                     <button class="btn btn-primary" type="submit" name="save">Save</button>
                 <?php endif ?>

@@ -206,7 +206,7 @@ $insurance_result = mysqli_query($db, $insurance_query);
 
             <div class="mb-3">
                 <?php if ($update == true) : ?>
-                    <button class="btn btn-primary" type="submit" name="update">update</button>
+                    <button class="btn btn-primary" type="submit" name="update">Update</button>
                 <?php else : ?>
                     <button class="btn btn-primary" type="submit" name="save">Save</button>
                 <?php endif ?>

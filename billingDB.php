@@ -36,8 +36,9 @@ if (isset($_POST['save'])) {
     header('location: billing.php');
 }
 if (isset($_POST['update'])) {
-    $billing_ID = $_POST["billing_ID"];
+
     $oldbilling_ID = $_POST["oldbilling_ID"];
+    $billing_ID = $_POST["billing_ID"];
     $booking_ID = $_POST["booking_ID"];
     $bill_date = $_POST["bill_date"];
     $status = $_POST["status"];
@@ -45,6 +46,12 @@ if (isset($_POST['update'])) {
     $late_fees = $_POST["late_fees"];
     $taxed_amount = $_POST["taxed_amount"];
     $total_amount = $_POST["total_amount"];
+
+    $cost_query = "SELECT * FROM booking WHERE booking_ID = '$booking_ID'";
+    $cost_result = mysqli_query($db, $cost_query);
+    $cost_row = mysqli_fetch_assoc($cost_result);
+    $booking_total_cost = (float)$cost_row['total_amount'];
+    $total_amount = $late_fees + $taxed_amount + $booking_total_cost - $discount_amount;
 
     mysqli_query($db, "UPDATE billing SET billing_ID='$billing_ID', booking_ID='$booking_ID', bill_date='$bill_date',status='$status',discount_amount='$discount_amount',late_fees='$late_fees',taxed_amount='$taxed_amount' ,total_amount='$total_amount'  WHERE billing_ID='$oldbilling_ID'");
     $_SESSION['message'] = "Bill Updated!";
